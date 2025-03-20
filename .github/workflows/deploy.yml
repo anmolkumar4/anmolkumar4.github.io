@@ -1,9 +1,9 @@
-name: Deploy to GitHub Pages
+name: Deploy static site to GitHub Pages
 
 on:
   push:
     branches:
-      - main  # or master
+      - main  # or master depending on your repo
 
 jobs:
   deploy:
@@ -12,10 +12,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          persist-credentials: false  # THIS is important!
+          persist-credentials: false
 
-      - name: Deploy to GitHub Pages
+      - name: Setup GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./  # change if needed
+          publish_dir: ./   # Since your index.html is in the root
+          publish_branch: gh-pages
+          force_orphan: true  # this creates the branch without history to avoid git issues
