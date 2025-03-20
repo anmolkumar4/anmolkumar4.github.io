@@ -8,15 +8,22 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+
+      - name: Debug Git Environment
+        run: |
+          git --version
+          git remote -v
+          git status
 
       - name: Deploy to GitHub Pages 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages           # The branch the action will deploy to
-          folder: ./                 # The folder containing your index.html (root in your case)
+          folder: ./                 # Folder with your index.html (root)
           clean: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN }}   # Use your PAT here
