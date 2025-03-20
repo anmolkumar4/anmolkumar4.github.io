@@ -3,21 +3,20 @@ name: Deploy static site to GitHub Pages
 on:
   push:
     branches:
-      - main  # or master depending on your repo
+      - main  # or master
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          persist-credentials: false
 
-      - name: Setup GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Deploy to GitHub Pages 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./   # Since your index.html is in the root
-          publish_branch: gh-pages
-          force_orphan: true  # this creates the branch without history to avoid git issues
+          branch: gh-pages           # The branch the action will deploy to
+          folder: ./                 # The folder containing your index.html (root in your case)
+          clean: true
+          token: ${{ secrets.GITHUB_TOKEN }}
